@@ -23,6 +23,7 @@ const sideObj: Array<SubMenus> = [
 ];
 
 function SideBarItems() {
+
     const [role, setRole] = useState<Array<UserRole>>([]);
 
     const hasPermission = (list: Array<string | null>): boolean => {
@@ -31,26 +32,25 @@ function SideBarItems() {
     };
 
 
-    return (
-        <>
-            {sideObj.map((obj, iMenu) => (
-                <SubMenu
-                    key={iMenu}
-                    icon={obj.icon}
-                    title={obj.title}
-                    style={obj.style}
-                >
-                    {obj.routes.map((route, iRoute) =>
-                        hasPermission(route.permission) && (
-                            <Item key={`${iMenu}${iRoute}`}>
-                                <Link to={route.route}>{route.name}</Link>
-                            </Item>
-                        )
-                    )}
-                </SubMenu>
-            ))}
-        </>
-    );
+    return sideObj.map((obj, iMenu) => (
+        <SubMenu
+            key={iMenu}
+            icon={obj.icon}
+            title={obj.title}
+            style={obj.style}
+        >
+            {obj.routes
+                .map((route, iRoute) =>
+                    hasPermission(route.permission) && (
+                        <Item key={`${iMenu}${iRoute}`}>
+                            <Link to={route.route}>{route.name}</Link>
+                        </Item>
+                    )
+                )}
+        </SubMenu>
+    ));
+
+
 }
 
 export default SideBarItems;

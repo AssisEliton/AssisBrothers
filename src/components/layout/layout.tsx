@@ -45,7 +45,7 @@ const ProtectedLayout: React.FC = () => {
                 </Content>
 
                 <Footer style={{ textAlign: 'center', background: darkTheme.token.menuDarkBg, color: darkTheme.token.menuDarkColor }}>
-                    {new Date().getFullYear()} Created by Eliton assis
+                    {new Date().getFullYear()} Created by Eliton Assis
                 </Footer>
 
             </Layout>

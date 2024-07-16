@@ -57,7 +57,7 @@ export default function MenuSideBar({ collapsed, setCollapsed }: MenuSideBarProp
                     }}
                 />
             </div>
-
+             {/* substituir */}
             <StyledMenu
                 theme='dark'
                 mode="inline"
@@ -65,7 +65,9 @@ export default function MenuSideBar({ collapsed, setCollapsed }: MenuSideBarProp
                 defaultSelectedKeys={['1']}
                 onClick={() => setCollapsed(window.innerWidth < 768)}
             >
+
                 <SideBarItems />
+
             </StyledMenu>
 
             <div className="demo-logo-vertical" />
