@@ -42,20 +42,18 @@ const ShirtModel: React.FC = () => {
   const { size } = useThree();
 
   useFrame(() => {
-    if (modelRef.current) {
-      const { width, height } = size;
-      modelRef.current.position.set(0, -11.3, 0); // Posiciona o modelo ao centro do canvas
-      modelRef.current.scale.set(8.5,8.5,8.5); // Ajuste a escala conforme necessário
-      modelRef.current.rotation.set(0,0.5,0);
-    }
+    if (!modelRef.current)
+      return;
+
+    modelRef.current.position.set(0, -10.8, 0); // Posiciona o modelo ao centro do canvas
+    modelRef.current.scale.set(8.5, 8.5, 8.5); // Ajuste a escala conforme necessário
+    modelRef.current.rotation.set(0.1, 0.5, 0);
   });
 
   return (
     <>
       <primitive object={gltf.scene} ref={modelRef} />
-      <mesh ref={planeRef}>
-        <meshBasicMaterial color="green" />
-      </mesh>
+      
     </>
   );
 };
