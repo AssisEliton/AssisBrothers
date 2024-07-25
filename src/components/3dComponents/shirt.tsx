@@ -112,7 +112,7 @@ function Shirt() {
         style={{ background: '#000000', minHeight: '50vh', height: '50vh', width: '100%' }} // Canvas com altura de 50vh e largura 100%
       >
         <ambientLight intensity={0.5} />
-       <LightAdjuster/>
+        <LightAdjuster />
         <OrbitControls
           maxPolarAngle={Math.PI / 2} // Limita a rotação para não ultrapassar o eixo X
           minPolarAngle={Math.PI / 2} // Limita a rotação para não ultrapassar o eixo X
