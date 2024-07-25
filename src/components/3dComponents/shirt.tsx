@@ -6,12 +6,6 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 function CameraAdjuster() {
   const { camera, size } = useThree();
   const initialSetup = useRef(false);
-  const modeloCamisa = new Map<string, string>()
-    .set("peito", "Object_10")
-    .set("ombro_direito", "Object_20")
-    .set("ombro_esquerdo", "Object_18")
-    .set("costa", "Object_14");
-
 
   const updateCamera = () => {
     const { width, height } = size;
@@ -43,8 +37,6 @@ const ShirtModel: React.FC = () => {
   const { gl, scene, camera } = useThree();
   const raycaster = new Raycaster();
   const mouse = new Vector2();
-  const [highlightedMesh, setHighlightedMesh] = useState<any>(null);
-
 
   useEffect(() => {
     const onMouseMove = (event: MouseEvent) => {
@@ -52,24 +44,36 @@ const ShirtModel: React.FC = () => {
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
+    const onMouseOver = () => {
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(scene.children, true);
+
+      if (intersects.length > 0) {
+        document.body.style.cursor = 'pointer';
+      } else {
+        document.body.style.cursor = 'default';
+      }
+    };
+
     const onClick = (event: MouseEvent) => {
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(scene.children, true);
-    
-      if (intersects.length == 0)
-        return;
 
-      const intersectedObject = intersects[0].object;
-      console.log(`Clicked on: ${intersectedObject.name}`);
-      // Chame sua callback aqui
-
+      if (intersects.length > 0) {
+        const intersectedObject = intersects[0].object;
+        console.log(`Clicked on: ${intersectedObject.name}`);
+        // Chame sua callback aqui
+      }
     };
 
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseOver);
     window.addEventListener('click', onClick);
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousemove', onMouseOver);
       window.removeEventListener('click', onClick);
     };
 
