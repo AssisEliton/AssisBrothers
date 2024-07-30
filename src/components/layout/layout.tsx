@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { Rotas } from '../../router/routes.tsx';
 import MenuSideBar from '../sideBar/MenuSideBar.tsx';
+import { ImageProvider } from '../../context/ImageContext.tsx';
 
 
-const { Header, Content, Footer } = Layout; 
+const { Header, Content, Footer } = Layout;
 
 const darkTheme = {
     token: {
@@ -22,7 +23,7 @@ const darkTheme = {
 
 const ProtectedLayout: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-   // const { user } = useAuth();
+    // const { user } = useAuth();
 
     // if (!user)
     //     return <Navigate to="/login" />;
@@ -30,17 +31,19 @@ const ProtectedLayout: React.FC = () => {
 
     return (
         <Layout style={{ minHeight: '100vh', background: darkTheme.token.menuDarkBg }}>
-            <MenuSideBar collapsed={collapsed} setCollapsed={setCollapsed}/>
+            <MenuSideBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
             <Layout>
 
                 <Header className='d-flex justify-content-end align-items-center' style={{ background: darkTheme.token.menuDarkBg }}>
-                     {/* <LogoffDropdown /> */}
+                    {/* <LogoffDropdown /> */}
                 </Header>
 
                 <Content style={{ margin: '24px 16px 0', background: darkTheme.token.menudarkSubMenuItemBg }}>
                     <div className='d-flex justify-content-center align-items-center' style={{ padding: 24, minHeight: 360, background: darkTheme.token.menudarkSubMenuItemBg }}>
-                        <Rotas />
+                        <ImageProvider>
+                            <Rotas />
+                        </ImageProvider>
                     </div>
                 </Content>
 

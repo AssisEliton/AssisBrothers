@@ -14,10 +14,9 @@ const sideObj: Array<SubMenus> = [
     {
         icon: <SolutionOutlined />,
         routes: [
-            { route: "/conferencia/checklist", name: "Check List", permission: [null] },
-            { route: "/conferencia/itens", name: "Itens", permission: ['master'] }
+            { route: "/updload", name: "temp", permission: [null] },
         ],
-        title: 'Conferência',
+        title: 'seila',
         style: { backgroundColor: '#004AAD' }
     },
 ];
