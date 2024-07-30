@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
+import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Raycaster, Vector2, TextureLoader, MeshStandardMaterial, Mesh } from "three";
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import { useImageContext } from "../../context/ImageContext";
+import { customModal } from "../dialogs/custom/CustomDialog";
+import IsolatedPart from "../selectMesh/selectMesh";
 
 function CameraAdjuster() {
   const { camera, size } = useThree();
@@ -38,37 +41,8 @@ const ShirtModel: React.FC = () => {
   const { scene, camera } = useThree();
   const raycaster = new Raycaster();
   const mouse = new Vector2();
-  const { images } = useImageContext(); // Chama o hook aqui, onde é permitido
 
-  // Função para criar e aplicar a textura
-  const criarTextura = (objetName: string) => {
-    if (images.length === 0) {
-      console.log("Nenhuma imagem disponível no contexto");
-      return;
-    }
-    
-    const base64 = images[0]; // Aqui você pode escolher qual base64 usar ou implementar uma lógica para selecionar
 
-    // Cria uma textura a partir do base64
-    const textureLoader = new TextureLoader();
-    const texture = textureLoader.load(base64);
-
-    // Aplica a textura ao material do objeto
-    const object = scene.getObjectByName(objetName);
-    if (object instanceof Mesh && object.material) {
-      const material = object.material as MeshStandardMaterial;
-
-      // Ajusta o mapeamento UV da textura
-      texture.wrapS = texture.wrapT = 1000; // Ajusta a repetição da textura se necessário
-      material.map = texture;
-      material.map.repeat.set(1, 1); // Ajuste o repeat para se adaptar ao modelo
-
-      // Atualiza o material
-      material.needsUpdate = true;
-    } else {
-      console.log(`Objeto ${objetName} não encontrado ou não é um Mesh`);
-    }
-  };
 
   const onMouseMove = (event: MouseEvent) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -92,8 +66,12 @@ const ShirtModel: React.FC = () => {
 
     if (intersects.length > 0) {
       const intersectedObject = intersects[0].object;
-      console.log(`Clicked on: ${intersectedObject.name}`);
-      criarTextura(intersectedObject.name);
+
+      if (intersectedObject instanceof THREE.Mesh)
+        customModal(
+          "Escolha uma imagem",
+          <IsolatedPart part={intersectedObject} ></IsolatedPart>
+        )
     }
   };
 
@@ -107,7 +85,7 @@ const ShirtModel: React.FC = () => {
       window.removeEventListener('mousemove', onMouseOver);
       window.removeEventListener('click', onClick);
     };
-  }, [raycaster, mouse, camera, scene.children, images]);
+  }, [raycaster, mouse, camera, scene.children]);
 
   useFrame(() => {
     if (modelRef.current) {

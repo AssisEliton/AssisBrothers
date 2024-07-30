@@ -41,9 +41,7 @@ const ProtectedLayout: React.FC = () => {
 
                 <Content style={{ margin: '24px 16px 0', background: darkTheme.token.menudarkSubMenuItemBg }}>
                     <div className='d-flex justify-content-center align-items-center' style={{ padding: 24, minHeight: 360, background: darkTheme.token.menudarkSubMenuItemBg }}>
-                        <ImageProvider>
                             <Rotas />
-                        </ImageProvider>
                     </div>
                 </Content>
 
